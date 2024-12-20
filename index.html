@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kovaak's Playlist Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #search-button:hover {
+            background-color: #555;
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .playlist {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 4px solid #333;
+        }
+
+        .playlist-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .playlist-code {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kovaak's Playlist Search</h1>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for a playlist...">
+        <button id="search-button">Search</button>
+    </div>
+
+    <div class="results-container" id="results-container">
+        <!-- Results will be injected here -->
+    </div>
+
+    <script>
+        document.getElementById('search-button').addEventListener('click', function() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!query) {
+                alert('Please enter a search term.');
+                return;
+            }
+            searchPlaylists(query);
+        });
+
+        const playlists = [
+            { title: 'Fortnite Aim Routine', code: 'ABC123' },
+            { title: 'Valorant Flick Training', code: 'XYZ456' },
+            { title: 'CS:GO Reflex Trainer', code: 'LMN789' },
+            { title: 'Apex Legends Tracking', code: 'OPQ246' },
+            { title: 'General Aim Training', code: 'DEF135' }
+            // Add more playlists as needed
+        ];
+
+        function searchPlaylists(query) {
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            const filteredPlaylists = playlists.filter(playlist => 
+                playlist.title.toLowerCase().includes(query)
+            );
+
+            if (filteredPlaylists.length > 0) {
+                filteredPlaylists.forEach(playlist => {
+                    const playlistElement = document.createElement('div');
+                    playlistElement.classList.add('playlist');
+
+                    const titleElement = document.createElement('div');
+                    titleElement.classList.add('playlist-title');
+                    titleElement.textContent = playlist.title;
+
+                    const codeElement = document.createElement('div');
+                    codeElement.classList.add('playlist-code');
+                    codeElement.textContent = `Code: ${playlist.code}`;
+
+                    playlistElement.appendChild(titleElement);
+                    playlistElement.appendChild(codeElement);
+
+                    resultsContainer.appendChild(playlistElement);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p>No playlists found.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
