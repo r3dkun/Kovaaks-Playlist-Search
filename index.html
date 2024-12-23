@@ -31,60 +31,15 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .main-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .sponsor-container {
-            flex: 0 0 250px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .sponsor-container h2 {
-            font-family: 'Playfair Display', serif;
-            color: #b22222;
-            margin-bottom: 15px;
-        }
-
-        .sponsor {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .sponsor img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        .sponsor p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .content-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .search-container {
-            width: 100%;
-            max-width: 500px;
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
         #search-input {
-            width: 100%;
-            padding: 12px;
+            width: 300px;
+            padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px 0 0 4px;
@@ -98,7 +53,7 @@
         }
 
         #search-button {
-            padding: 12px 20px;
+            padding: 10px 20px;
             font-size: 16px;
             border: 1px solid #b71c1c;
             background-color: #b71c1c;
@@ -117,14 +72,13 @@
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
-            width: 100%;
         }
 
         .playlist {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
+            width: 90%;
             max-width: 600px;
             padding: 20px;
             margin-bottom: 20px;
@@ -174,53 +128,91 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .sponsor-container {
-                margin-bottom: 20px;
-                width: 100%;
-                max-width: 400px;
-            }
-
-            .search-container {
-                max-width: 100%;
-            }
+        .dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
         }
     </style>
 </head>
 <body>
     <h1>Kovaak's Playlist Search</h1>
 
-    <div class="main-container">
-        <!-- Sponsor Section -->
-        <div class="sponsor-container">
-            <h2>AD</h2>
-            <div class="sponsor">
-                <a href="aff.gearupglobal.com/product/download/yR01uI7NJKTm" target="_blank">
-                    <img src="https://scontent-for2-2.xx.fbcdn.net/v/t39.30808-6/315642247_118230481083239_2857367725856426727_n.png?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=-j4kSlmiXIEQ7kNvgG9fyL2&_nc_zt=23&_nc_ht=scontent-for2-2.xx&_nc_gid=A6ZgENwSk8Z8jgk3585BZqO&oh=00_AYC83BtyTo0D82G7vHHqs3MQO0gsTow5z3tJn66ia-DXKw&oe=676F8DE7" alt="Sponsor 1">
-                    <p>Better connection to your game!</p>
-                </a>
-            </div>
-        </div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for a playlist...">
+        <button id="search-button">Search</button>
+    </div>
 
-        <!-- Main Content -->
-        <div class="content-container">
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search for a playlist...">
-                <button id="search-button">Search</button>
-            </div>
-            <div class="results-container" id="results-container">
-                <!-- Results will be injected here -->
-            </div>
-        </div>
+    <div class="results-container" id="results-container">
+        <!-- Results will be injected here -->
     </div>
 
     <script>
-        // Your existing JavaScript code here
+        document.getElementById('search-button').addEventListener('click', performSearch);
+        document.getElementById('search-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        document.getElementById('search-input').addEventListener('input', function() {
+            const input = document.getElementById('search-input');
+            input.style.borderColor = input.value ? '#e57373' : '#ccc';
+        });
+
+        const playlists = [
+            { title: 'MIRA x Valorant Routine Beginner', code: 'KOVAAKSQUESTINGMIDCOUNTERSTRAFE' },
+            { title: 'MIRA x Valorant Routine Advanced', code: 'KOVAAKSFLICKINGBUFFEDPRISM' },
+            { title: 'MattyOW Target Switching', code: 'KovaaKsTimewarpingCobaltPlunder' },
+            { title: 'Viscose Speed Target Switching', code: 'KovaaKsCalling180Entryfrag' },
+            { title: 'Fallen Smoothness #1', code: 'KovaaKsStartingCapturedDeserteagle' },
+            { title: 'Fallen Smoothness #2', code: 'KovaaKsStrafingCeruleanAutomatic' },
+            { title: 'OrioNN Smoothness Easy', code: 'KovaaKsCapturingAsparagusAfk' },
+            { title: 'Tragedy Smoothness God', code: 'KovaaKsStartingMaroonGear' },
+            { title: 'Mirin Apex routine', code: 'KovaaKsPeakingIndigoBug' },
+        ];
+
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!query) {
+                alert('Please enter a search term.');
+                return;
+            }
+            searchPlaylists(query);
+        }
+
+        function searchPlaylists(query) {
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            const filteredPlaylists = playlists.filter(playlist => 
+                playlist.title.toLowerCase().includes(query)
+            );
+
+            if (filteredPlaylists.length > 0) {
+                filteredPlaylists.forEach((playlist, index) => {
+                    const playlistElement = document.createElement('div');
+                    playlistElement.classList.add('playlist');
+
+                    const titleElement = document.createElement('div');
+                    titleElement.classList.add('playlist-title');
+                    titleElement.textContent = playlist.title;
+
+                    const codeElement = document.createElement('div');
+                    codeElement.classList.add('playlist-code');
+                    codeElement.textContent = Code: ${playlist.code};
+
+                    playlistElement.appendChild(titleElement);
+                    playlistElement.appendChild(codeElement);
+
+                    // Add delay to each playlist for staggered animation
+                    playlistElement.style.animationDelay = ${index * 0.1}s;
+
+                    resultsContainer.appendChild(playlistElement);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p class="no-results">No playlists found.</p>';
+            }
+        }
     </script>
 </body>
 </html>
