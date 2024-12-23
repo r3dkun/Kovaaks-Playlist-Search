@@ -16,10 +16,10 @@
 
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #fdecea;
+            background-color: #f9f9f9;
             color: #333;
             padding: 20px;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         h1 {
@@ -29,6 +29,29 @@
             font-family: 'Playfair Display', serif;
             color: #b22222;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-bar .dark-mode-toggle {
+            font-size: 16px;
+            cursor: pointer;
+            color: #b22222;
+            background: none;
+            border: 1px solid #b22222;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-bar .dark-mode-toggle:hover {
+            background-color: #b22222;
+            color: #fff;
         }
 
         .search-container {
@@ -132,10 +155,46 @@
             background-color: #333;
             color: #f4f4f9;
         }
+
+        .dark-mode .playlist {
+            background-color: #444;
+            border-left-color: #d32f2f;
+        }
+
+        .dark-mode #search-input {
+            background-color: #555;
+            color: #f4f4f9;
+            border-color: #666;
+        }
+
+        .dark-mode #search-input:focus {
+            border-color: #e57373;
+            box-shadow: 0 0 10px rgba(229, 115, 115, 0.8);
+        }
+
+        .dark-mode #search-button {
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+
+        .dark-mode .dark-mode-toggle {
+            color: #f4f4f9;
+            border-color: #f4f4f9;
+        }
+
+        .dark-mode .dark-mode-toggle:hover {
+            background-color: #f4f4f9;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <h1>Kovaak's Playlist Search</h1>
+
+    <div class="top-bar">
+        <div></div>
+        <button class="dark-mode-toggle" id="dark-mode-toggle">Toggle Dark Mode</button>
+    </div>
 
     <div class="search-container">
         <input type="text" id="search-input" placeholder="Search for a playlist...">
@@ -147,18 +206,6 @@
     </div>
 
     <script>
-        document.getElementById('search-button').addEventListener('click', performSearch);
-        document.getElementById('search-input').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                performSearch();
-            }
-        });
-
-        document.getElementById('search-input').addEventListener('input', function() {
-            const input = document.getElementById('search-input');
-            input.style.borderColor = input.value ? '#e57373' : '#ccc';
-        });
-
         const playlists = [
             { title: 'MIRA x Valorant Routine Beginner', code: 'KOVAAKSQUESTINGMIDCOUNTERSTRAFE' },
             { title: 'MIRA x Valorant Routine Advanced', code: 'KOVAAKSFLICKINGBUFFEDPRISM' },
@@ -170,6 +217,17 @@
             { title: 'Tragedy Smoothness God', code: 'KovaaKsStartingMaroonGear' },
             { title: 'Mirin Apex routine', code: 'KovaaKsPeakingIndigoBug' },
         ];
+
+        document.getElementById('search-button').addEventListener('click', performSearch);
+        document.getElementById('search-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
 
         function performSearch() {
             const query = document.getElementById('search-input').value.trim().toLowerCase();
@@ -199,13 +257,13 @@
 
                     const codeElement = document.createElement('div');
                     codeElement.classList.add('playlist-code');
-                    codeElement.textContent = Code: ${playlist.code};
+                    codeElement.textContent = `Code: ${playlist.code}`;
 
                     playlistElement.appendChild(titleElement);
                     playlistElement.appendChild(codeElement);
 
                     // Add delay to each playlist for staggered animation
-                    playlistElement.style.animationDelay = ${index * 0.1}s;
+                    playlistElement.style.animationDelay = `${index * 0.1}s`;
 
                     resultsContainer.appendChild(playlistElement);
                 });
