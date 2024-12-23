@@ -145,28 +145,7 @@
     <div class="results-container" id="results-container">
         <!-- Results will be injected here -->
     </div>
- 
-    <div class="visit-counter" id="visit-counter">
-        Visits: <span id="visit-count">0</span>
-    </div>
 
-    <script>
-        // Visit counter logic
-        const visitCountElement = document.getElementById('visit-count');
-        const visitCounterKey = 'visitCount';
-
-        // Retrieve the visit count from localStorage
-        let visitCount = parseInt(localStorage.getItem(visitCounterKey)) || 0;
-
-        // Increment the visit count
-        visitCount += 1;
-
-        // Store the updated count in localStorage
-        localStorage.setItem(visitCounterKey, visitCount);
-
-        // Update the visit count on the page
-        visitCountElement.textContent = visitCount;
-        
     <script>
         document.getElementById('search-button').addEventListener('click', performSearch);
         document.getElementById('search-input').addEventListener('keypress', function(event) {
