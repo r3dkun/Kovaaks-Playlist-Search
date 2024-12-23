@@ -13,7 +13,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #ffcccc;
             color: #333;
             padding: 20px;
         }
@@ -35,6 +35,13 @@
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px 0 0 4px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #ff6666;
+            box-shadow: 0 0 5px #ff6666;
+            outline: none;
         }
 
         #search-button {
@@ -107,15 +114,20 @@
         <!-- Results will be injected here -->
     </div>
 
-    
     <script>
         document.getElementById('search-button').addEventListener('click', function() {
-            const query = document.getElementById('search-input').value.trim().toLowerCase();
-            if (!query) {
-                alert('Please enter a search term.');
-                return;
+            performSearch();
+        });
+
+        document.getElementById('search-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
             }
-            searchPlaylists(query);
+        });
+
+        document.getElementById('search-input').addEventListener('input', function() {
+            const input = document.getElementById('search-input');
+            input.style.borderColor = input.value ? '#ff6666' : '#ccc';
         });
 
         const playlists = [
@@ -126,6 +138,15 @@
             { title: 'Tragedy Smoothness Routine "Smoothness God"', code: 'KovaaKsStartingMaroonGear' }
             // Add more playlists as needed
         ];
+
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!query) {
+                alert('Please enter a search term.');
+                return;
+            }
+            searchPlaylists(query);
+        }
 
         function searchPlaylists(query) {
             const resultsContainer = document.getElementById('results-container');
