@@ -31,6 +31,47 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
+        .main-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .sponsor-container {
+            flex: 0 0 250px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsor-container h2 {
+            font-family: 'Playfair Display', serif;
+            color: #b22222;
+            margin-bottom: 15px;
+        }
+
+        .sponsor {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sponsor img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .sponsor p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .content-container {
+            flex: 1;
+        }
+
         .search-container {
             display: flex;
             justify-content: center;
@@ -128,91 +169,52 @@
             }
         }
 
-        .dark-mode {
-            background-color: #333;
-            color: #f4f4f9;
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sponsor-container {
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Kovaak's Playlist Search</h1>
 
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search for a playlist...">
-        <button id="search-button">Search</button>
-    </div>
+    <div class="main-container">
+        <!-- Sponsor Section -->
+        <div class="sponsor-container">
+            <h2>Sponsored By</h2>
+            <div class="sponsor">
+                <a href="https://example.com" target="_blank">
+                    <img src="sponsor1.jpg" alt="Sponsor 1">
+                    <p>Awesome Gaming Gear</p>
+                </a>
+            </div>
+            <div class="sponsor">
+                <a href="https://https://aff.gearupglobal.com/product/download/yR01uI7NJKTm" target="_blank">
+                    <img src="https://www.gearupbooster.com/blog/news/index_46.html" alt="https://www.gearupbooster.com/blog/news/index_46.html">
+                    <p>Pro Aim Trainers</p>
+                </a>
+            </div>
+        </div>
 
-    <div class="results-container" id="results-container">
-        <!-- Results will be injected here -->
+        <!-- Main Content -->
+        <div class="content-container">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for a playlist...">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="results-container" id="results-container">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
     </div>
 
     <script>
-        document.getElementById('search-button').addEventListener('click', performSearch);
-        document.getElementById('search-input').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                performSearch();
-            }
-        });
-
-        document.getElementById('search-input').addEventListener('input', function() {
-            const input = document.getElementById('search-input');
-            input.style.borderColor = input.value ? '#e57373' : '#ccc';
-        });
-
-        const playlists = [
-            { title: 'MIRA x Valorant Routine Beginner', code: 'KOVAAKSQUESTINGMIDCOUNTERSTRAFE' },
-            { title: 'MIRA x Valorant Routine Advanced', code: 'KOVAAKSFLICKINGBUFFEDPRISM' },
-            { title: 'MattyOW Target Switching', code: 'KovaaKsTimewarpingCobaltPlunder' },
-            { title: 'Viscose Speed Target Switching', code: 'KovaaKsCalling180Entryfrag' },
-            { title: 'Fallen Smoothness #1', code: 'KovaaKsStartingCapturedDeserteagle' },
-            { title: 'Fallen Smoothness #2', code: 'KovaaKsStrafingCeruleanAutomatic' },
-            { title: 'OrioNN Smoothness Easy', code: 'KovaaKsCapturingAsparagusAfk' },
-            { title: 'Tragedy Smoothness God', code: 'KovaaKsStartingMaroonGear' },
-            { title: 'Mirin Apex routine', code: 'KovaaKsPeakingIndigoBug' },
-        ];
-
-        function performSearch() {
-            const query = document.getElementById('search-input').value.trim().toLowerCase();
-            if (!query) {
-                alert('Please enter a search term.');
-                return;
-            }
-            searchPlaylists(query);
-        }
-
-        function searchPlaylists(query) {
-            const resultsContainer = document.getElementById('results-container');
-            resultsContainer.innerHTML = '';
-
-            const filteredPlaylists = playlists.filter(playlist => 
-                playlist.title.toLowerCase().includes(query)
-            );
-
-            if (filteredPlaylists.length > 0) {
-                filteredPlaylists.forEach((playlist, index) => {
-                    const playlistElement = document.createElement('div');
-                    playlistElement.classList.add('playlist');
-
-                    const titleElement = document.createElement('div');
-                    titleElement.classList.add('playlist-title');
-                    titleElement.textContent = playlist.title;
-
-                    const codeElement = document.createElement('div');
-                    codeElement.classList.add('playlist-code');
-                    codeElement.textContent = `Code: ${playlist.code}`;
-
-                    playlistElement.appendChild(titleElement);
-                    playlistElement.appendChild(codeElement);
-
-                    // Add delay to each playlist for staggered animation
-                    playlistElement.style.animationDelay = `${index * 0.1}s`;
-
-                    resultsContainer.appendChild(playlistElement);
-                });
-            } else {
-                resultsContainer.innerHTML = '<p class="no-results">No playlists found.</p>';
-            }
-        }
+        // Your existing JavaScript code here
     </script>
 </body>
 </html>
